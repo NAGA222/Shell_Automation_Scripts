@@ -3,7 +3,11 @@
 # Define the function to find and kill all zombie processes
 function kill_zombies {
     # Get the list of all zombie processes
+<<<<<<< HEAD:Find_and _kill_all_the _zombie _processes.sh
     zombies=$(ps aux | grep Z | awk '{print $2}')       #ps aux --list of all running processes
+=======
+    zombies=$(ps aux | grep Z | awk '{print $2}')       #ps aux --list of running processes
+>>>>>>> 5bd6cc68930edc483f9ba76b823d30f81dcd6189:Find_and _kill_all_the_zombie_processes.sh
                                                         #grep   --searching and filtering of text data
     # Check if there are any zombie processes           #awk    --text processing and data extraction
     if [ -z "$zombies" ]; then
@@ -18,6 +22,7 @@ function kill_zombies {
 
 # Call the function to kill zombie processes
 kill_zombies
+
 
 
 #explanation of code starts:
