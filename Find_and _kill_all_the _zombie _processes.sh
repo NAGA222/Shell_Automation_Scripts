@@ -3,9 +3,9 @@
 # Define the function to find and kill all zombie processes
 function kill_zombies {
     # Get the list of all zombie processes
-    zombies=$(ps aux | grep Z | awk '{print $2}')
-
-    # Check if there are any zombie processes
+    zombies=$(ps aux | grep Z | awk '{print $2}')       #ps aux --present running processes
+                                                        #grep   --searching and filtering of text data
+    # Check if there are any zombie processes           #awk    --text processing and data extraction
     if [ -z "$zombies" ]; then
         echo "No zombie processes found"
     else
@@ -18,6 +18,21 @@ function kill_zombies {
 
 # Call the function to kill zombie processes
 kill_zombies
+
+
+
+#explanation of code starts:
+<<com
+what is zombie processes in linux os?
+
+In Linux, a zombie process is a type of process that has completed its execution, but its exit status has not yet been collected by its parent process.
+
+When a process terminates, its exit status is stored in a small data structure called a "process descriptor". This descriptor remains in the system's process table until the parent process collects the exit status using the wait() system call. If the parent process fails to collect the exit status for any reason, such as terminating unexpectedly or neglecting to call wait(), the process descriptor remains in the process table, and the process becomes a zombie process.
+
+Zombie processes don't consume system resources such as memory or CPU cycles, as they have already completed their execution. However, they do occupy space in the process table, which has a finite size. If too many zombie processes accumulate, the system may run out of process table slots, leading to new processes being unable to start.
+
+Zombie processes are usually harmless on their own, but they can indicate a problem with the parent process or with the system's process management. A large number of zombie processes may indicate a bug in the parent process or a problem with the system's process management. Therefore, it's important to identify and remove zombie processes to prevent any potential issues.
+com
 
 <<com
 This script first retrieves a list of all processes with a status of "Z" (zombie) using the ps command and awk to extract the process IDs. It then checks if there are any zombie processes in the list, and if so, kills them using the kill command with the -9 option to force-kill the processes. Finally, it prints a message to indicate that the zombie processes have been killed.
@@ -65,15 +80,5 @@ The semicolon ; at the end of the command signals the end of the if statement.
 So, the overall meaning of the command is that if the $zombies variable is empty, the condition inside the if statement evaluates to true. In other words, if there are no zombie processes running on the system, the script will print a message indicating that no zombie processes were found. Otherwise, if there are zombie processes running, the script will continue to the next part of the code and kill them.
 com
 
-<<com
-what is zombie processes in linux os?
 
-In Linux, a zombie process is a type of process that has completed its execution, but its exit status has not yet been collected by its parent process.
-
-When a process terminates, its exit status is stored in a small data structure called a "process descriptor". This descriptor remains in the system's process table until the parent process collects the exit status using the wait() system call. If the parent process fails to collect the exit status for any reason, such as terminating unexpectedly or neglecting to call wait(), the process descriptor remains in the process table, and the process becomes a zombie process.
-
-Zombie processes don't consume system resources such as memory or CPU cycles, as they have already completed their execution. However, they do occupy space in the process table, which has a finite size. If too many zombie processes accumulate, the system may run out of process table slots, leading to new processes being unable to start.
-
-Zombie processes are usually harmless on their own, but they can indicate a problem with the parent process or with the system's process management. A large number of zombie processes may indicate a bug in the parent process or a problem with the system's process management. Therefore, it's important to identify and remove zombie processes to prevent any potential issues.
-com
 
