@@ -3,7 +3,7 @@
 # Define the function to find and kill all zombie processes
 function kill_zombies {
     # Get the list of all zombie processes
-    zombies=$(ps aux | grep Z | awk '{print $2}')       #ps aux --present running processes
+    zombies=$(ps aux | grep Z | awk '{print $2}')       #ps aux --list of all running processes
                                                         #grep   --searching and filtering of text data
     # Check if there are any zombie processes           #awk    --text processing and data extraction
     if [ -z "$zombies" ]; then
@@ -32,14 +32,11 @@ When a process terminates, its exit status is stored in a small data structure c
 Zombie processes don't consume system resources such as memory or CPU cycles, as they have already completed their execution. However, they do occupy space in the process table, which has a finite size. If too many zombie processes accumulate, the system may run out of process table slots, leading to new processes being unable to start.
 
 Zombie processes are usually harmless on their own, but they can indicate a problem with the parent process or with the system's process management. A large number of zombie processes may indicate a bug in the parent process or a problem with the system's process management. Therefore, it's important to identify and remove zombie processes to prevent any potential issues.
-com
 
-<<com
+
 This script first retrieves a list of all processes with a status of "Z" (zombie) using the ps command and awk to extract the process IDs. It then checks if there are any zombie processes in the list, and if so, kills them using the kill command with the -9 option to force-kill the processes. Finally, it prints a message to indicate that the zombie processes have been killed.
-com
 
 
-<<com
 zombies=$(ps aux | grep Z | awk '{print $2}')
 This command has three parts, separated by the pipe (|) symbol, which takes the output of one command and passes it as input to the next command in the pipeline:
 
@@ -48,10 +45,8 @@ ps aux: This command lists all the currently running processes on the system alo
 grep Z: This command filters the output of ps aux to only show lines that contain the letter "Z" in the second column, which indicates that the process is a zombie process.
 
 awk '{print $2}': This command extracts the second column of output from the grep command, which contains the process IDs of the zombie processes. It then prints only those process IDs using the print command in awk.
-com
 
 
-<<com
 The command zombies=$(ps aux | grep Z | awk '{print $2}') executes from left to right.
 
 Here's the order in which the commands are executed:
@@ -65,9 +60,8 @@ The output of grep Z command is then piped to awk '{print $2}' command, which pr
 Finally, the output of the entire pipeline is assigned to the zombies variable using the = operator, so that it can be used later in the script.
 
 So the commands execute from left to right, with each command taking the output of the previous command as its input.
-com
 
-<<com
+
 The command if [ -z "$zombies" ]; is an if statement in Bash that tests whether the $zombies variable is empty or not.
 
 Here's how it works:
