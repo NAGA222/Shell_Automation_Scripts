@@ -21,8 +21,12 @@ fi
 start_seconds=$(date_to_seconds "$start_date")
 end_seconds=$(date_to_seconds "$end_date")
 
+# Create output file
+output_file="file_sizes_${start_date}_${end_date}.txt"
+touch $output_file
+
 # Find the files within the date range and display their sizes
-find / -type f -newermt "$start_date" ! -newermt "$end_date" -exec du -h {} \;
+find / -type f -newermt "$start_date" ! -newermt "$end_date" -exec du -h {} \; >> $output_file
 
 <<com
 Here's how to use this script:
